@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchBacklogs } from "../../../data/fetchBacklogs";
+import { fetchTasks } from "../../../data/fetchTasks";
 import { BacklogList } from "./backlog-list/backlog-list";
 import { Pagination } from "./pagination/pagination";
 import { PAGE_SIZE_OPTIONS } from "../../../constants/constants";
@@ -20,8 +20,8 @@ export function PaginatedBacklogList() {
   }
 
   const { isPending, isError, error, data } = useQuery({
-    queryKey: ["backlogs", { currentPage, pageSize }],
-    queryFn: () => fetchBacklogs(currentPage, pageSize),
+    queryKey: ["tasks", { currentPage, pageSize }],
+    queryFn: () => fetchTasks(currentPage, pageSize),
   });
 
   useEffect(() => {
@@ -47,6 +47,7 @@ export function PaginatedBacklogList() {
 
   return (
     <>
+      <h1 className="title is-3">Backlog Taken</h1>
       <div style={{ marginBottom: "2rem" }}>
         <BacklogList backlogItems={backlogItems} />
       </div>

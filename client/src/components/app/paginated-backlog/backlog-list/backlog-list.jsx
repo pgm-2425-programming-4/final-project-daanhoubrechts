@@ -3,14 +3,14 @@ export function BacklogList({ backlogItems }) {
     <table className="table is-hoverable">
       <thead>
         <tr>
-          <th>Naam</th>
+          <th>Titel</th>
         </tr>
       </thead>
       <tbody>
         {backlogItems.map((backlogItem) => {
           return (
             <tr key={backlogItem.id}>
-              <td>{backlogItem.name}</td>
+              <td>{backlogItem.title}</td>
             </tr>
           );
         })}
