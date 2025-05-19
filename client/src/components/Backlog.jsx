@@ -1,4 +1,4 @@
-export function BacklogList({ backlogItems }) {
+export function Backlog({ backlogItems }) {
   return (
     <table className="table is-hoverable">
       <thead>

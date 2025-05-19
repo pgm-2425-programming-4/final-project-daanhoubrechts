@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { fetchTasks } from "../../../data/fetchTasks";
-import { BacklogList } from "./backlog-list/backlog-list";
-import { Pagination } from "./pagination/pagination";
-import { PAGE_SIZE_OPTIONS } from "../../../constants/constants";
+import { fetchTasks } from "../../data/fetchTasks";
+import { Backlog } from "./Backlog";
+import { Pagination } from "./Pagination";
+import { PAGE_SIZE_OPTIONS } from "../../constants/constants";
 import { useQuery } from "@tanstack/react-query";
 
-export function PaginatedBacklogList() {
+export function PaginatedBacklog() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [pageSize, setPageSize] = useState(PAGE_SIZE_OPTIONS[0]);
@@ -49,7 +49,7 @@ export function PaginatedBacklogList() {
     <>
       <h1 className="title is-3">Backlog Taken</h1>
       <div style={{ marginBottom: "2rem" }}>
-        <BacklogList backlogItems={backlogItems} />
+        <Backlog backlogItems={backlogItems} />
       </div>
       <Pagination
         currentPage={currentPage}
