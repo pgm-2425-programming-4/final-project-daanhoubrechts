@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Management Board</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar__title">PROJECTS</div>
+        <div class="sidebar__item sidebar__item--active">PGM3</div>
+        <div class="sidebar__item">PGM4</div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="header__filter-area">
+                <div class="dropdown">
+                    <div class="dropdown__select">
+                        Back-end
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 15L18 9" stroke="#666" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <input type="text" class="search-box" placeholder="Search by description">
+            </div>
+            <div class="header__project-title">Active project: PGM3</div>
+            <div class="header__action-buttons">
+                <button class="btn btn--primary">Add new task</button>
+                <button class="btn btn--secondary">View backlog</button>
+            </div>
+        </div>
+
+        <div class="board">
+            <div class="board__column">
+                <h2 class="board__column-header board__column-header--todo">To do</h2>
+                <div class="task-card">
+                    <div class="task-card__title">Create pipeline with Github Actions</div>
+                    <div class="task-card__tags">
+                        <div class="tag">Infra</div>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-card__title">Some task for PGM3</div>
+                    <div class="task-card__tags">
+                        <div class="tag">Documentation</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="board__column">
+                <h2 class="board__column-header board__column-header--progress">In progress</h2>
+                <div class="task-card">
+                    <div class="task-card__title">Set up Strapi on Render</div>
+                    <div class="task-card__tags">
+                        <div class="tag">Infra</div>
+                        <div class="tag">Back-end</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="board__column">
+                <h2 class="board__column-header board__column-header--review">Ready for review</h2>
+                <div class="task-card">
+                    <div class="task-card__title">Add formatting with Prettier</div>
+                    <div class="task-card__tags">
+                        <div class="tag">Front-end</div>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-card__title">Add linting with ESLint</div>
+                    <div class="task-card__tags">
+                        <div class="tag">Front-end</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="board__column">
+                <h2 class="board__column-header board__column-header--done">Done</h2>
+                <div class="task-card">
+                    <div class="task-card__title">Initialize Git repository on Github</div>
+                    <div class="task-card__tags">
+                        <div class="tag">Infra</div>
+                    </div>
+                </div>
+                <div class="task-card">
+                    <div class="task-card__title">Document data model</div>
+                    <div class="task-card__tags">
+                        <div class="tag">Back-end</div>
+                        <div class="tag">Documentation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
