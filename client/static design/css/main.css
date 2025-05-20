@@ -1,0 +1,23 @@
+@import "variables.css";
+@import "sidebar.css";
+@import "layout.css";
+@import "buttons.css";
+@import "form-controls.css";
+@import "board.css";
+@import "task-card.css";
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  display: flex;
+  height: 100vh;
+}
