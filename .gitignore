@@ -108,7 +108,7 @@ server/ssl
 server/.idea
 server/nbproject
 server/public/uploads/*
-server/!public/uploads/.gitkeep
+!server/public/uploads/.gitkeep
 server/.tsbuildinfo
 server/.eslintcache
 
@@ -129,12 +129,12 @@ server/.node_history
 ############################
 
 server/.yarn/*
-server/!.yarn/cache
-server/!.yarn/unplugged
-server/!.yarn/patches
-server/!.yarn/releases
-server/!.yarn/sdks
-server/!.yarn/versions
+!server/.yarn/cache
+!server/.yarn/unplugged
+!server/.yarn/patches
+!server/.yarn/releases
+!server/.yarn/sdks
+!server/.yarn/versions
 server/.pnp.*
 server/yarn-error.log
 
