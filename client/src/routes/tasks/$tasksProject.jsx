@@ -4,7 +4,7 @@ import { fetchTasksByProject } from "../../queries/fetchTasksByProject";
 export const Route = createFileRoute("/tasks/$tasksProject")({
   loader: async ({ params }) => {
     const data = await fetchTasksByProject(params.tasksProject);
-    if (!data) {
+    if (isEmpty(data)) {
       console.error("No data found for Project:", params.tasksProject);
       throw notFound();
     }
@@ -40,5 +40,14 @@ function RouteComponent() {
         </div>
       </div>
     </div>
+  );
+}
+
+function isEmpty(obj) {
+  return (
+    !obj || // Check if object is null/undefined
+    !obj.data || // Check if data property exists
+    !Array.isArray(obj.data) || // Check if data is an array
+    obj.data.length === 0 // Check if array has elements
   );
 }
