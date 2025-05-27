@@ -1,30 +1,45 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { fetchProjects } from "../data/fetchProjects";
+import { useEffect, useState } from "react";
 
-export const Route = createRootRoute({
-  component: () => (
+// Create a proper React component with uppercase name
+const RootComponent = () => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const result = await fetchProjects();
+        console.log("Projects data:", result);
+        setProjects(result.data || []);
+      } catch (error) {
+        console.error("Error loading projects:", error);
+      }
+    };
+
+    loadProjects();
+  }, []);
+
+  return (
     <>
       <div className="sidebar">
-        <div class="sidebar__title">PROJECTS</div>
+        <div className="sidebar__title">PROJECTS</div>
 
-        <div className="sidebar__item">
-          <Link to="/tasks/Pgm" params={{ taskCat: "Pgm" }}>
-            {"Pgm"}
-          </Link>
-        </div>
-        <div className="sidebar__item">
-          <Link to="/tasks/Web" params={{ taskCat: "Web" }}>
-            {"Web"}
-          </Link>
-        </div>
-        <div className="sidebar__item">
-          <Link to="/tasks/Atwork" params={{ taskCat: "Atwork" }}>
-            {"Atwork"}
-          </Link>
-        </div>
+        {projects.map((project) => (
+          <div key={project.id} className="sidebar__item">
+            <Link to="/tasks/$taskCat" params={{ taskCat: project.name }}>
+              {project.name}
+            </Link>
+          </div>
+        ))}
       </div>
       <Outlet />
       <TanStackRouterDevtools />
     </>
-  ),
+  );
+};
+
+export const Route = createRootRoute({
+  component: RootComponent,
 });
