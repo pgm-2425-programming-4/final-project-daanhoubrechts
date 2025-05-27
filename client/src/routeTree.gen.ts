@@ -11,13 +11,13 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as TasksTasksCategoryImport } from './routes/tasks/$tasksCategory'
+import { Route as TasksTasksProjectImport } from './routes/tasks/$tasksProject'
 
 // Create/Update Routes
 
-const TasksTasksCategoryRoute = TasksTasksCategoryImport.update({
-  id: '/tasks/$tasksCategory',
-  path: '/tasks/$tasksCategory',
+const TasksTasksProjectRoute = TasksTasksProjectImport.update({
+  id: '/tasks/$tasksProject',
+  path: '/tasks/$tasksProject',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -25,11 +25,11 @@ const TasksTasksCategoryRoute = TasksTasksCategoryImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/tasks/$tasksCategory': {
-      id: '/tasks/$tasksCategory'
-      path: '/tasks/$tasksCategory'
-      fullPath: '/tasks/$tasksCategory'
-      preLoaderRoute: typeof TasksTasksCategoryImport
+    '/tasks/$tasksProject': {
+      id: '/tasks/$tasksProject'
+      path: '/tasks/$tasksProject'
+      fullPath: '/tasks/$tasksProject'
+      preLoaderRoute: typeof TasksTasksProjectImport
       parentRoute: typeof rootRoute
     }
   }
@@ -38,33 +38,33 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/tasks/$tasksCategory': typeof TasksTasksCategoryRoute
+  '/tasks/$tasksProject': typeof TasksTasksProjectRoute
 }
 
 export interface FileRoutesByTo {
-  '/tasks/$tasksCategory': typeof TasksTasksCategoryRoute
+  '/tasks/$tasksProject': typeof TasksTasksProjectRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/tasks/$tasksCategory': typeof TasksTasksCategoryRoute
+  '/tasks/$tasksProject': typeof TasksTasksProjectRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/tasks/$tasksCategory'
+  fullPaths: '/tasks/$tasksProject'
   fileRoutesByTo: FileRoutesByTo
-  to: '/tasks/$tasksCategory'
-  id: '__root__' | '/tasks/$tasksCategory'
+  to: '/tasks/$tasksProject'
+  id: '__root__' | '/tasks/$tasksProject'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  TasksTasksCategoryRoute: typeof TasksTasksCategoryRoute
+  TasksTasksProjectRoute: typeof TasksTasksProjectRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  TasksTasksCategoryRoute: TasksTasksCategoryRoute,
+  TasksTasksProjectRoute: TasksTasksProjectRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +77,11 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.jsx",
       "children": [
-        "/tasks/$tasksCategory"
+        "/tasks/$tasksProject"
       ]
     },
-    "/tasks/$tasksCategory": {
-      "filePath": "tasks/$tasksCategory.jsx"
+    "/tasks/$tasksProject": {
+      "filePath": "tasks/$tasksProject.jsx"
     }
   }
 }
