@@ -1,15 +1,30 @@
-import * as React from 'react'
-import { Outlet, createRootRoute } from '@tanstack/react-router'
+import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 export const Route = createRootRoute({
-  component: RootComponent,
-})
+  component: () => (
+    <>
+      <div className="sidebar">
+        <div class="sidebar__title">PROJECTS</div>
 
-function RootComponent() {
-  return (
-    <React.Fragment>
-      <div>Hello "__root"!</div>
+        <div className="sidebar__item">
+          <Link to="/tasks/Pgm" params={{ taskCat: "Pgm" }}>
+            {"Pgm"}
+          </Link>
+        </div>
+        <div className="sidebar__item">
+          <Link to="/tasks/Web" params={{ taskCat: "Web" }}>
+            {"Web"}
+          </Link>
+        </div>
+        <div className="sidebar__item">
+          <Link to="/tasks/Atwork" params={{ taskCat: "Atwork" }}>
+            {"Atwork"}
+          </Link>
+        </div>
+      </div>
       <Outlet />
-    </React.Fragment>
-  )
-}
+      <TanStackRouterDevtools />
+    </>
+  ),
+});
