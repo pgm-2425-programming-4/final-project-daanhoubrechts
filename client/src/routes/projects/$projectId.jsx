@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { fetchTasksByProjectId } from "../../queries/fetchTasksByProjectId";
+import { StatusColumn } from "../../components/StatusColumn";
 
 export const Route = createFileRoute("/projects/$projectId")({
   loader: async ({ params }) => {
@@ -26,28 +27,41 @@ function RouteComponent() {
 
   return (
     <div className="main-content">
-      <div className="board">
-        <div className="board__column">
-          <div className="mb-4">
-            <Link
-              to="/projects/$projectId/backlog"
-              params={{
-                projectId: Route.useParams().projectId,
-              }}
-            >
-              View Backlog
-            </Link>
-          </div>
-          {data.data.map((task) => {
-            return (
-              <div className="task-card">
-                <div key={task.id} className="task-card__title">
-                  {task.title}
-                </div>
-              </div>
-            );
-          })}
+      <div className="header">
+        <div className="header__action-buttons">
+          <Link
+            to="/projects/$projectId/backlog"
+            params={{
+              projectId: Route.useParams().projectId,
+            }}
+            className="btn btn--secondary"
+          >
+            View Backlog
+          </Link>
         </div>
+      </div>
+
+      <div className="board">
+        <StatusColumn
+          statusName="To do"
+          data={data}
+          className={"board__column-header--todo"}
+        />
+        <StatusColumn
+          statusName="In progress"
+          data={data}
+          className={"board__column-header--progress"}
+        />
+        <StatusColumn
+          statusName="Ready for review"
+          data={data}
+          className={"board__column-header--review"}
+        />
+        <StatusColumn
+          statusName="Done"
+          data={data}
+          className={"board__column-header--done"}
+        />
       </div>
     </div>
   );
