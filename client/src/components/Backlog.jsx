@@ -1,6 +1,6 @@
 export function Backlog({ backlogItems }) {
   return (
-    <table className="table is-hoverable">
+    <table>
       <thead>
         <tr>
           <th>Titel</th>
