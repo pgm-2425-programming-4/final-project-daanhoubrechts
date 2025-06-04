@@ -1,0 +1,35 @@
+/* Kanban board styles */
+.board {
+  display: flex;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+
+.board__column {
+  flex: 1;
+  min-width: 17.5rem;
+}
+
+.board__column-header {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 0.125rem solid var(--color-border);
+}
+
+.board__column-header--todo {
+  border-color: var(--color-todo);
+}
+
+.board__column-header--progress {
+  border-color: var(--color-progress);
+}
+
+.board__column-header--review {
+  border-color: var(--color-review);
+}
+
+.board__column-header--done {
+  border-color: var(--color-done);
+}

@@ -1,0 +1,32 @@
+/* Sidebar styles */
+.sidebar {
+  width: 11.25rem;
+  background-color: var(--color-white);
+  border-right: 0.0625rem solid var(--color-border);
+  padding: var(--space-lg);
+}
+
+.sidebar__title {
+  font-size: var(--font-sm);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-md);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sidebar__item {
+  margin: var(--space-sm) 0;
+  font-size: var(--font-md);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.sidebar__item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.sidebar__item--active {
+  color: var(--color-active);
+  font-weight: 500;
+}

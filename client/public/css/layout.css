@@ -1,0 +1,30 @@
+/* Layout styles */
+.main-content {
+  flex: 1;
+  padding: var(--space-lg);
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xl);
+  padding: var(--space-sm) 0;
+}
+
+.header__filter-area {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.header__project-title {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.header__action-buttons {
+  display: flex;
+  gap: var(--space-md);
+}

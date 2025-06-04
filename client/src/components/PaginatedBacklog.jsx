@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { fetchTasks } from "../../../data/fetchTasks";
-import { Backlog } from "./backlog/Backlog";
-import { Pagination } from "./pagination/pagination";
-import { PAGE_SIZE_OPTIONS } from "../../../constants/constants";
+import { fetchBacklogTasksByProjectId } from "../queries/fetchBacklogTasksByProjectId";
+import { Backlog } from "./Backlog";
+import { Pagination } from "./pagination";
+import { PAGE_SIZE_OPTIONS } from "../constants/constants";
 import { useQuery } from "@tanstack/react-query";
 
-export function PaginatedBacklog() {
+export function PaginatedBacklog({ projectId }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [pageSize, setPageSize] = useState(PAGE_SIZE_OPTIONS[0]);
@@ -20,8 +20,9 @@ export function PaginatedBacklog() {
   }
 
   const { isPending, isError, error, data } = useQuery({
-    queryKey: ["tasks", { currentPage, pageSize }],
-    queryFn: () => fetchTasks(currentPage, pageSize),
+    queryKey: ["tasks", { currentPage, pageSize, projectId }],
+    queryFn: () =>
+      fetchBacklogTasksByProjectId(currentPage, pageSize, projectId),
   });
 
   useEffect(() => {
@@ -43,12 +44,10 @@ export function PaginatedBacklog() {
     return <span>Error: {error.message}</span>;
   }
 
-  // At this point we can assume data is not falsy
-
   return (
     <>
-      <h1 className="title is-3">Backlog Taken</h1>
-      <div style={{ marginBottom: "2rem" }}>
+      <h1>Project Backlog</h1>
+      <div>
         <Backlog backlogItems={backlogItems} />
       </div>
       <Pagination
