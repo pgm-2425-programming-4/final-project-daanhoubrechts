@@ -373,35 +373,6 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiBacklogBacklog extends Struct.CollectionTypeSchema {
-  collectionName: 'backlogs';
-  info: {
-    description: '';
-    displayName: 'Backlog';
-    pluralName: 'backlogs';
-    singularName: 'backlog';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::backlog.backlog'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiLabelLabel extends Struct.CollectionTypeSchema {
   collectionName: 'labels';
   info: {
@@ -1024,7 +995,6 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::backlog.backlog': ApiBacklogBacklog;
       'api::label.label': ApiLabelLabel;
       'api::project.project': ApiProjectProject;
       'api::status.status': ApiStatusStatus;
