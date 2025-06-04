@@ -28,7 +28,7 @@ const RootComponent = () => {
 
         {projects.map((project) => (
           <div key={project.id} className="sidebar__item">
-            <Link to="/tasks/$taskCat" params={{ taskCat: project.name }}>
+            <Link to="/projects/$projectId" params={{ projectId: project.id }}>
               {project.name}
             </Link>
           </div>
