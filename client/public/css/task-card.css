@@ -1,0 +1,28 @@
+/* Task card styles */
+.task-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.task-card__title {
+  font-size: var(--font-md);
+  font-weight: 500;
+  margin-bottom: var(--space-sm);
+}
+
+.task-card__tags {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.tag {
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-xs);
+  background-color: var(--color-tag);
+  color: var(--color-white);
+}

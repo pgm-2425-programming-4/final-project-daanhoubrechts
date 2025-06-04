@@ -1,0 +1,28 @@
+/* Form controls */
+.dropdown {
+  position: relative;
+}
+
+.dropdown__select {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.5rem 0.9375rem;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-white);
+  cursor: pointer;
+  min-width: 8.75rem;
+}
+
+.dropdown__select svg {
+  margin-left: auto;
+}
+
+.search-box {
+  padding: 0.5rem 0.9375rem;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-sm);
+  width: 15.625rem;
+  font-size: var(--font-sm);
+}
