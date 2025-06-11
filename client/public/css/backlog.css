@@ -1,0 +1,125 @@
+/* Backlog styles */
+.backlog {
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.backlog__title {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.backlog__container {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+  width: 100%;
+  max-width: 1000px;
+}
+
+.backlog__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.backlog__table-header {
+  background-color: var(--color-surface-lighter);
+  color: var(--color-text);
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: var(--font-sm);
+  letter-spacing: 0.05em;
+}
+
+.backlog__table-header th {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.backlog__table-row {
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.2s ease;
+}
+
+.backlog__table-row:hover {
+  background-color: var(--color-surface-lighter);
+}
+
+.backlog__table-row:last-child {
+  border-bottom: none;
+}
+
+.backlog__table-cell {
+  padding: var(--space-md);
+  color: var(--color-text);
+  font-size: var(--font-sm);
+  text-align: center;
+}
+
+.backlog__table-cell--title {
+  font-weight: 500;
+  text-align: left;
+}
+
+.backlog__table-cell--labels {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+/* Loading and Error states */
+.backlog__loading,
+.backlog__error {
+  padding: var(--space-lg);
+  color: var(--color-text-light);
+  text-align: center;
+  font-size: var(--font-md);
+}
+
+.backlog__error {
+  color: #e57373;
+}
+
+/* Backlog wrapper */
+.backlog-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.backlog-wrapper .backlog__back-link {
+  align-self: flex-start;
+  margin-bottom: var(--space-lg);
+}
+
+/* Navigation Back Link */
+.backlog__back-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-light);
+  text-decoration: none;
+  font-size: var(--font-sm);
+  margin-bottom: var(--space-md);
+  transition: color 0.2s ease;
+}
+
+.backlog__back-link:hover {
+  color: var(--color-white);
+}
+
+.backlog__back-link::before {
+  content: "←";
+  margin-right: var(--space-xs);
+}

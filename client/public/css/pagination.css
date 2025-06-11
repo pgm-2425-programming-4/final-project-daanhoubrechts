@@ -1,0 +1,124 @@
+/* Pagination styles */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-lg);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 1000px;
+}
+
+.pagination__controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.pagination__button {
+  background-color: var(--color-surface);
+  color: var(--color-text-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.pagination__button:hover:not(:disabled) {
+  background-color: var(--color-surface-lighter);
+  color: var(--color-white);
+}
+
+.pagination__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination__list {
+  display: flex;
+  list-style: none;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+}
+
+.pagination__list-item {
+  display: inline-block;
+}
+
+.pagination__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 var(--space-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination__link:hover {
+  background-color: var(--color-surface-lighter);
+  color: var(--color-white);
+}
+
+.pagination__link--current {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  border-color: var(--color-secondary);
+}
+
+.pagination__link--current:hover {
+  background-color: var(--color-secondary-dark);
+}
+
+.pagination__ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  color: var(--color-text-light);
+  font-size: var(--font-sm);
+}
+
+.pagination__size-select {
+  display: flex;
+  align-items: center;
+  margin-right: var(--space-md);
+}
+
+.pagination__select {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-sm);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23b0b3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.5rem;
+  transition: all 0.2s ease;
+}
+
+.pagination__select:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+}
+
+.pagination__select:hover {
+  background-color: var(--color-surface-lighter);
+}

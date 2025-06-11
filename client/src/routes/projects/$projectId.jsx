@@ -70,13 +70,6 @@ function RouteComponent() {
     <div className="main-content">
       <div className="header">
         <div className="header__action-buttons">
-          <button
-            className="btn btn--primary"
-            onClick={() => setShowAddTaskModal(true)}
-          >
-            Add task
-          </button>
-
           <div className="filter-dropdown">
             <select
               value={selectedLabelId}
@@ -93,6 +86,12 @@ function RouteComponent() {
               ))}
             </select>
           </div>
+          <button
+            className="btn btn--primary"
+            onClick={() => setShowAddTaskModal(true)}
+          >
+            Add task
+          </button>
 
           <Link
             to="/projects/$projectId/backlog"

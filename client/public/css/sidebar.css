@@ -1,32 +1,105 @@
 /* Sidebar styles */
 .sidebar {
   width: 11.25rem;
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
   border-right: 0.0625rem solid var(--color-border);
   padding: var(--space-lg);
 }
 
 .sidebar__title {
   font-size: var(--font-sm);
-  color: var(--color-text-light);
+  color: var(--color-text-muted);
   margin-bottom: var(--space-md);
   font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .sidebar__item {
   margin: var(--space-sm) 0;
   font-size: var(--font-md);
-  color: var(--color-text);
+  color: var(--color-text-light);
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .sidebar__item a {
   text-decoration: none;
   color: inherit;
+  display: block;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
 }
 
+.sidebar__item a:hover {
+  background-color: var(--color-surface-lighter);
+  color: var(--color-white);
+}
+
+.sidebar__item a.sidebar__item--active,
 .sidebar__item--active {
-  color: var(--color-active);
+  color: var(--color-white) !important;
   font-weight: 500;
+  background-color: var(--color-primary);
+  position: relative;
+}
+
+.sidebar__item a.sidebar__item--active::before,
+.sidebar__item--active::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  background-color: var(--color-secondary);
+  border-radius: 0 2px 2px 0;
+}
+
+.sidebar__section {
+  margin-bottom: var(--space-xl);
+}
+
+.sidebar__project {
+  margin-bottom: var(--space-md);
+}
+
+.sidebar__sub-item {
+  margin-left: var(--space-md);
+  font-size: var(--font-sm);
+  position: relative;
+}
+
+.sidebar__sub-item::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 1px;
+  background-color: var(--color-text-muted);
+}
+
+.sidebar__sub-item a {
+  text-decoration: none;
+  color: var(--color-text-muted);
+  display: block;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.sidebar__sub-item a:hover {
+  background-color: var(--color-surface-lighter);
+  color: var(--color-text-light);
+}
+
+.sidebar__sub-item a.sidebar__item--active {
+  color: var(--color-white);
+  font-weight: 500;
+  background-color: var(--color-secondary);
+  position: relative;
 }
