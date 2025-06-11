@@ -41,18 +41,17 @@ export function Pagination({
   pageNumberArray.forEach((pageNumber, index) => {
     if (pageNumber === null) {
       pageLinks.push(
-        <li key={index}>
-          <span className="pagination-ellipsis">&hellip;</span>
+        <li className="pagination__list-item" key={index}>
+          <span className="pagination__ellipsis">&hellip;</span>
         </li>
       );
     } else {
       pageLinks.push(
-        <li key={index}>
+        <li className="pagination__list-item" key={index}>
           <button
-            className={
-              "pagination-link " +
-              (pageNumber === currentPage ? "is-current" : "")
-            }
+            className={`pagination__link ${
+              pageNumber === currentPage ? "pagination__link--current" : ""
+            }`}
             aria-label={`Go to page ${pageNumber}`}
             onClick={() => onPageChanged(pageNumber)}
           >
@@ -65,22 +64,9 @@ export function Pagination({
 
   return (
     <nav className="pagination" role="navigation" aria-label="pagination">
-      <button
-        className="pagination-previous"
-        disabled={currentPage === 1}
-        onClick={() => onPageChanged(currentPage - 1)}
-      >
-        Previous
-      </button>
-      <button
-        className="pagination-next"
-        disabled={currentPage === pageCount}
-        onClick={() => onPageChanged(currentPage + 1)}
-      >
-        Next page
-      </button>
-      <div className="select" style={{ marginRight: "2rem" }}>
+      <div className="pagination__size-select">
         <select
+          className="pagination__select"
           defaultValue={pageSize}
           onChange={(event) => onPageSizeChanged(event.target.value)}
         >
@@ -93,7 +79,26 @@ export function Pagination({
           })}
         </select>
       </div>
-      <ul className="pagination-list">{pageLinks}</ul>
+
+      <div className="pagination__controls">
+        <button
+          className="pagination__button"
+          disabled={currentPage === 1}
+          onClick={() => onPageChanged(currentPage - 1)}
+        >
+          Vorige
+        </button>
+
+        <ul className="pagination__list">{pageLinks}</ul>
+
+        <button
+          className="pagination__button"
+          disabled={currentPage === pageCount}
+          onClick={() => onPageChanged(currentPage + 1)}
+        >
+          Volgende
+        </button>
+      </div>
     </nav>
   );
 }

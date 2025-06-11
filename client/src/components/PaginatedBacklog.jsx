@@ -36,27 +36,34 @@ export function PaginatedBacklog({ projectId }) {
     }
   }, [data, currentPage]);
 
-  if (isPending) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>;
-  }
-
   return (
-    <>
-      <h1>Project Backlog</h1>
-      <div>
-        <Backlog backlogItems={backlogItems} />
-      </div>
-      <Pagination
-        currentPage={currentPage}
-        pageCount={pageCount}
-        pageSize={pageSize}
-        onPageChanged={handlePageChanged}
-        onPageSizeChanged={handlePageSizeChanged}
-      />
-    </>
+    <div className="backlog">
+      <h2 className="backlog__title">Project Backlog</h2>
+
+      {isPending && (
+        <div className="backlog__loading">
+          <span>Taken laden...</span>
+        </div>
+      )}
+
+      {isError && (
+        <div className="backlog__error">
+          <span>Er is een fout opgetreden: {error.message}</span>
+        </div>
+      )}
+
+      {!isPending && !isError && (
+        <>
+          <Backlog backlogItems={backlogItems} />
+          <Pagination
+            currentPage={currentPage}
+            pageCount={pageCount}
+            pageSize={pageSize}
+            onPageChanged={handlePageChanged}
+            onPageSizeChanged={handlePageSizeChanged}
+          />
+        </>
+      )}
+    </div>
   );
 }
