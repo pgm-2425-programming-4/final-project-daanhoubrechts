@@ -7,8 +7,8 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div>
-      <h3>Welcome!</h3>
-      <p>Kies een project...</p>
+      <h3>Welkom bij mijn Kaban applicatie</h3>
+      <p>Selecteer een project om de taken te zien te krijgen.</p>
     </div>
   );
 }
