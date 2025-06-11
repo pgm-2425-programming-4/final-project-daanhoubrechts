@@ -25,26 +25,39 @@ const RootComponent = () => {
       <div className="sidebar">
         <div className="sidebar__section">
           <div className="sidebar__item">
-            <Link to="/">Home</Link>
+            <Link
+              to="/"
+              activeProps={{ className: "sidebar__item--active active" }}
+            >
+              Home
+            </Link>
           </div>
         </div>
         <div className="sidebar__section">
           <h2 className="sidebar__title">PROJECTS</h2>
           {projects.map((project) => (
-            <div key={project.id} className="sidebar__item">
-              <Link
-                to="/projects/$projectId"
-                params={{ projectId: project.id }}
-              >
-                {project.name}
-              </Link>
+            <div key={project.id} className="sidebar__project">
+              <div className="sidebar__item">
+                <Link
+                  to="/projects/$projectId"
+                  params={{ projectId: project.id }}
+                  activeProps={{ className: "sidebar__item--active active" }}
+                >
+                  {project.name}
+                </Link>
+              </div>
             </div>
           ))}
         </div>
         <div className="sidebar__section">
           <h2 className="sidebar__title">INFO</h2>
           <div className="sidebar__item">
-            <Link to="/about">About</Link>
+            <Link
+              to="/about"
+              activeProps={{ className: "sidebar__item--active active" }}
+            >
+              About
+            </Link>
           </div>
         </div>
       </div>
