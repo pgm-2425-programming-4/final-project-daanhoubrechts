@@ -24,15 +24,30 @@ const RootComponent = () => {
   return (
     <>
       <div className="sidebar">
-        <div className="sidebar__title">PROJECTS</div>
-
-        {projects.map((project) => (
-          <div key={project.id} className="sidebar__item">
-            <Link to="/projects/$projectId" params={{ projectId: project.id }}>
-              {project.name}
-            </Link>
+        <div className="sidebar__section">
+          <div className="sidebar__item">
+            <Link to="/">Home</Link>
           </div>
-        ))}
+        </div>
+        <div className="sidebar__section">
+          <h2 className="sidebar__title">PROJECTS</h2>
+          {projects.map((project) => (
+            <div key={project.id} className="sidebar__item">
+              <Link
+                to="/projects/$projectId"
+                params={{ projectId: project.id }}
+              >
+                {project.name}
+              </Link>
+            </div>
+          ))}
+        </div>
+        <div className="sidebar__section">
+          <h2 className="sidebar__title">INFO</h2>
+          <div className="sidebar__item">
+            <Link to="/about">About</Link>
+          </div>
+        </div>
       </div>
       <Outlet />
       <TanStackRouterDevtools />
