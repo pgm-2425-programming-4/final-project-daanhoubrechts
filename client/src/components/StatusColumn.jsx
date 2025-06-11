@@ -1,9 +1,13 @@
 import { Task } from "./Task";
 
 export function StatusColumn({ statusName, data, className }) {
-  const filteredTasks = data.data.filter(
-    (task) => task.current_status && task.current_status.Name === statusName
-  );
+  const hasValidData = data && data.data && Array.isArray(data.data);
+
+  const filteredTasks = hasValidData
+    ? data.data.filter(
+        (task) => task.current_status && task.current_status.Name === statusName
+      )
+    : [];
 
   return (
     <div className="board__column">

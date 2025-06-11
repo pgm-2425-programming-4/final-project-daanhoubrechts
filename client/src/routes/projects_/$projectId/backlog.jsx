@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PaginatedBacklog } from "../../../components/PaginatedBacklog";
-import { fetchBacklogTasksByProjectId } from "../../../queries/fetchBacklogTasksByProjectId";
+import { fetchBacklogTasksByProjectId } from "../../../queries/tasks/fetchBacklogTasksByProjectId";
 import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/projects_/$projectId/backlog")({

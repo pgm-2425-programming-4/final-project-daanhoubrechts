@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchBacklogTasksByProjectId } from "../queries/fetchBacklogTasksByProjectId";
+import { fetchBacklogTasksByProjectId } from "../queries/tasks/fetchBacklogTasksByProjectId";
 import { Backlog } from "./Backlog";
 import { Pagination } from "./pagination";
 import { PAGE_SIZE_OPTIONS } from "../constants/constants";
