@@ -1,9 +1,4 @@
 import { API_URL, API_TOKEN } from "../../constants/constants";
-
-/**
- * Fetches all available statuses from the API
- * @returns {Promise<Array>} Array of status objects
- */
 export async function fetchStatuses() {
   try {
     const response = await fetch(`${API_URL}/statuses`, {
@@ -20,11 +15,6 @@ export async function fetchStatuses() {
   }
 }
 
-/**
- * Helper function to safely get the name of a status from different possible structures
- * @param {Object} statusOption - The status object
- * @returns {string} The name of the status
- */
 export function getStatusName(statusOption) {
   return (
     statusOption.attributes?.Name ||

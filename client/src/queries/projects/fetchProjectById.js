@@ -1,11 +1,5 @@
 import { API_TOKEN, API_URL } from "../../constants/constants";
 
-/**
- * Fetches a project by its ID
- * @param {string|number} projectId - The ID of the project
- * @returns {Promise<Object>} The project data
- * @throws {Error} If the request fails
- */
 export async function fetchProjectById(projectId) {
   try {
     const result = await fetch(`${API_URL}/projects/${projectId}?populate=*`, {
