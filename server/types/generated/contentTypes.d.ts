@@ -376,6 +376,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiLabelLabel extends Struct.CollectionTypeSchema {
   collectionName: 'labels';
   info: {
+    description: '';
     displayName: 'Label';
     pluralName: 'labels';
     singularName: 'label';
@@ -392,7 +393,7 @@ export interface ApiLabelLabel extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    task: Schema.Attribute.Relation<'manyToOne', 'api::task.task'>;
+    tasks: Schema.Attribute.Relation<'manyToMany', 'api::task.task'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -473,7 +474,7 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     current_status: Schema.Attribute.Relation<'oneToOne', 'api::status.status'>;
     description: Schema.Attribute.Text;
-    labels: Schema.Attribute.Relation<'oneToMany', 'api::label.label'>;
+    labels: Schema.Attribute.Relation<'manyToMany', 'api::label.label'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::task.task'> &
       Schema.Attribute.Private;

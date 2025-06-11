@@ -18,12 +18,6 @@
     "description": {
       "type": "text"
     },
-    "labels": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::label.label",
-      "mappedBy": "task"
-    },
     "current_status": {
       "type": "relation",
       "relation": "oneToOne",
@@ -34,6 +28,12 @@
       "relation": "manyToOne",
       "target": "api::project.project",
       "inversedBy": "tasks"
+    },
+    "labels": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::label.label",
+      "mappedBy": "tasks"
     }
   }
 }

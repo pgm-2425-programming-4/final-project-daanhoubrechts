@@ -4,7 +4,8 @@
   "info": {
     "singularName": "label",
     "pluralName": "labels",
-    "displayName": "Label"
+    "displayName": "Label",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,9 +15,9 @@
       "type": "string",
       "required": true
     },
-    "task": {
+    "tasks": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::task.task",
       "inversedBy": "labels"
     }
