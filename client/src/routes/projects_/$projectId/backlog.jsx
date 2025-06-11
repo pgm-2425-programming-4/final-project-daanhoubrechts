@@ -20,30 +20,42 @@ function Backlog() {
   });
 
   if (isProjectLoading) {
-    return <div className="main-content">Loading project details...</div>;
+    return (
+      <div className="main-content backlog__loading">
+        Projectgegevens laden...
+      </div>
+    );
   }
 
   if (isProjectError) {
     return (
       <div className="main-content">
-        <div>Error loading project: {projectError.message}</div>
-        <div>
-          <Link to="/projects/$projectId" params={{ projectId }}>
-            &larr; Back to Project
-          </Link>
+        <div className="backlog__error">
+          Fout bij het laden van het project: {projectError.message}
         </div>
+        <Link
+          to="/projects/$projectId"
+          params={{ projectId }}
+          className="backlog__back-link"
+        >
+          Terug naar Project
+        </Link>
       </div>
     );
   }
 
   return (
     <div className="main-content">
-      <div>
-        <Link to="/projects/$projectId" params={{ projectId }}>
-          Back to Project
+      <div className="backlog-wrapper">
+        <Link
+          to="/projects/$projectId"
+          params={{ projectId }}
+          className="backlog__back-link"
+        >
+          Terug naar Project
         </Link>
+        <PaginatedBacklog projectId={projectId} />
       </div>
-      <PaginatedBacklog projectId={projectId} />
     </div>
   );
 }
