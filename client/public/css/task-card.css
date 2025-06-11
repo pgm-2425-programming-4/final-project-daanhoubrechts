@@ -5,6 +5,7 @@
   padding: var(--space-md);
   margin-bottom: var(--space-md);
   box-shadow: var(--shadow-sm);
+  cursor: pointer;
 }
 
 .task-card__title {

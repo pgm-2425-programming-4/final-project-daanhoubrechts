@@ -5,6 +5,7 @@
 @import "form-controls.css";
 @import "board.css";
 @import "task-card.css";
+@import "modal.css";
 
 *,
 *::before,

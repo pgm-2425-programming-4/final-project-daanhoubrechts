@@ -6,6 +6,7 @@
   font-size: var(--font-sm);
   cursor: pointer;
   border: none;
+  text-decoration: none;
 }
 
 .btn--primary {
