@@ -1,9 +1,8 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { fetchProjects } from "../data/fetchProjects";
+import { fetchProjects } from "../queries/projects/fetchProjects";
 import { useEffect, useState } from "react";
 
-// Create a proper React component with uppercase name
 const RootComponent = () => {
   const [projects, setProjects] = useState([]);
 
