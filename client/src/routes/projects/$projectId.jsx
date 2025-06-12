@@ -13,7 +13,6 @@ export const Route = createFileRoute("/projects/$projectId")({
       console.error("No data found for Project:", params.projectId);
       throw notFound();
     }
-    console.log("Data fetched for Project:", params.projectId, data);
     return data;
   },
 
@@ -60,6 +59,11 @@ function RouteComponent() {
   const handleAddTask = (newTask) => {
     setTasks([...tasks, newTask.data]);
     window.location.reload();
+  };
+
+  const handleTaskMoved = async () => {
+    const updatedData = await fetchTasksByProjectId(params.projectId);
+    setTasks(updatedData.data || []);
   };
 
   const handleLabelChange = (e) => {
@@ -110,21 +114,25 @@ function RouteComponent() {
           statusName="To do"
           data={{ data: filteredTasks }}
           className={"board__column-header--todo"}
+          onTaskMoved={handleTaskMoved}
         />
         <StatusColumn
           statusName="In progress"
           data={{ data: filteredTasks }}
           className={"board__column-header--progress"}
+          onTaskMoved={handleTaskMoved}
         />
         <StatusColumn
           statusName="Ready for review"
           data={{ data: filteredTasks }}
           className={"board__column-header--review"}
+          onTaskMoved={handleTaskMoved}
         />
         <StatusColumn
           statusName="Done"
           data={{ data: filteredTasks }}
           className={"board__column-header--done"}
+          onTaskMoved={handleTaskMoved}
         />
       </div>
 
