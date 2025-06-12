@@ -12,6 +12,7 @@
 @import "pagination.css";
 @import "pages.css";
 @import "drag-drop.css";
+@import "label-form.css";
 
 *,
 *::before,
