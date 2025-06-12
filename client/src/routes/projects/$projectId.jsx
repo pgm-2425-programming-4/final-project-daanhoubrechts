@@ -32,6 +32,7 @@ function RouteComponent() {
   const [tasks, setTasks] = useState(data.data || []);
   const [availableLabels, setAvailableLabels] = useState([]);
   const [selectedLabelId, setSelectedLabelId] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredTasks, setFilteredTasks] = useState(data.data || []);
 
   useEffect(() => {
@@ -44,17 +45,26 @@ function RouteComponent() {
   }, []);
 
   useEffect(() => {
-    if (!selectedLabelId) {
-      setFilteredTasks(tasks);
-    } else {
-      const filtered = tasks.filter(
+    let filtered = tasks;
+
+    // filteren op geselecteerde label
+    if (selectedLabelId) {
+      filtered = filtered.filter(
         (task) =>
           task.labels &&
           task.labels.some((label) => label.id.toString() === selectedLabelId)
       );
-      setFilteredTasks(filtered);
     }
-  }, [selectedLabelId, tasks]);
+
+    // filteren op zoekterm
+    if (searchTerm) {
+      filtered = filtered.filter((task) =>
+        task.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    setFilteredTasks(filtered);
+  }, [selectedLabelId, searchTerm, tasks]);
 
   const handleAddTask = (newTask) => {
     setTasks([...tasks, newTask.data]);
@@ -68,6 +78,10 @@ function RouteComponent() {
 
   const handleLabelChange = (e) => {
     setSelectedLabelId(e.target.value);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   return (
@@ -90,6 +104,18 @@ function RouteComponent() {
               ))}
             </select>
           </div>
+
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Zoek op taak naam..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="search-box"
+              aria-label="Zoek op taak naam"
+            />
+          </div>
+
           <button
             className="btn btn--primary"
             onClick={() => setShowAddTaskModal(true)}
