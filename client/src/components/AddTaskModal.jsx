@@ -5,6 +5,7 @@ import {
 } from "../queries/statuses/fetchStatuses";
 import { fetchLabels, getLabelName } from "../queries/labels/fetchLabels";
 import { createTask } from "../queries/tasks/createTask";
+import { AddLabelForm } from "./AddLabelForm";
 
 export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
   const [title, setTitle] = useState("");
@@ -14,6 +15,7 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
   const [availableStatuses, setAvailableStatuses] = useState([]);
   const [availableLabels, setAvailableLabels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showAddLabelForm, setShowAddLabelForm] = useState(false);
 
   // Fetch statuses and labels when component mounts
   useEffect(() => {
@@ -39,6 +41,12 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
     } else {
       setLabels([...labels, labelId]);
     }
+  };
+
+  const handleLabelAdded = (createdLabel) => {
+    setAvailableLabels([...availableLabels, createdLabel]);
+    setLabels([...labels, createdLabel.id]);
+    setShowAddLabelForm(false);
   };
 
   const handleSubmit = async (e) => {
@@ -130,19 +138,36 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
                 <label>Labels</label>
                 <div className="labels-selection">
                   {availableLabels.map((label) => (
-                    <div key={label.id} className="label-checkbox">
+                    <div
+                      key={label.id}
+                      className="label-checkbox"
+                      onClick={() => handleLabelToggle(label.id)}
+                    >
                       <input
                         type="checkbox"
                         id={`label-${label.id}`}
                         checked={labels.includes(label.id)}
-                        onChange={() => handleLabelToggle(label.id)}
+                        onChange={(e) => e.stopPropagation()}
                       />
-                      <label htmlFor={`label-${label.id}`}>
-                        {getLabelName(label)}
-                      </label>
+                      <span className="label-text">{getLabelName(label)}</span>
                     </div>
                   ))}
                 </div>
+
+                {!showAddLabelForm ? (
+                  <button
+                    type="button"
+                    className="btn btn--small btn--secondary"
+                    onClick={() => setShowAddLabelForm(true)}
+                  >
+                    + Add New Label
+                  </button>
+                ) : (
+                  <AddLabelForm
+                    onLabelAdded={handleLabelAdded}
+                    onCancel={() => setShowAddLabelForm(false)}
+                  />
+                )}
               </div>
             )}
 

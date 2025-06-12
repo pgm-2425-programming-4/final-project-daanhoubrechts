@@ -13,7 +13,6 @@ export const Route = createFileRoute("/projects/$projectId")({
       console.error("No data found for Project:", params.projectId);
       throw notFound();
     }
-    console.log("Data fetched for Project:", params.projectId, data);
     return data;
   },
 
@@ -33,6 +32,7 @@ function RouteComponent() {
   const [tasks, setTasks] = useState(data.data || []);
   const [availableLabels, setAvailableLabels] = useState([]);
   const [selectedLabelId, setSelectedLabelId] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredTasks, setFilteredTasks] = useState(data.data || []);
 
   useEffect(() => {
@@ -45,25 +45,43 @@ function RouteComponent() {
   }, []);
 
   useEffect(() => {
-    if (!selectedLabelId) {
-      setFilteredTasks(tasks);
-    } else {
-      const filtered = tasks.filter(
+    let filtered = tasks;
+
+    // filteren op geselecteerde label
+    if (selectedLabelId) {
+      filtered = filtered.filter(
         (task) =>
           task.labels &&
           task.labels.some((label) => label.id.toString() === selectedLabelId)
       );
-      setFilteredTasks(filtered);
     }
-  }, [selectedLabelId, tasks]);
+
+    // filteren op zoekterm
+    if (searchTerm) {
+      filtered = filtered.filter((task) =>
+        task.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    setFilteredTasks(filtered);
+  }, [selectedLabelId, searchTerm, tasks]);
 
   const handleAddTask = (newTask) => {
     setTasks([...tasks, newTask.data]);
     window.location.reload();
   };
 
+  const handleTaskMoved = async () => {
+    const updatedData = await fetchTasksByProjectId(params.projectId);
+    setTasks(updatedData.data || []);
+  };
+
   const handleLabelChange = (e) => {
     setSelectedLabelId(e.target.value);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   return (
@@ -86,6 +104,18 @@ function RouteComponent() {
               ))}
             </select>
           </div>
+
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Zoek op taak naam..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="search-box"
+              aria-label="Zoek op taak naam"
+            />
+          </div>
+
           <button
             className="btn btn--primary"
             onClick={() => setShowAddTaskModal(true)}
@@ -110,21 +140,25 @@ function RouteComponent() {
           statusName="To do"
           data={{ data: filteredTasks }}
           className={"board__column-header--todo"}
+          onTaskMoved={handleTaskMoved}
         />
         <StatusColumn
           statusName="In progress"
           data={{ data: filteredTasks }}
           className={"board__column-header--progress"}
+          onTaskMoved={handleTaskMoved}
         />
         <StatusColumn
           statusName="Ready for review"
           data={{ data: filteredTasks }}
           className={"board__column-header--review"}
+          onTaskMoved={handleTaskMoved}
         />
         <StatusColumn
           statusName="Done"
           data={{ data: filteredTasks }}
           className={"board__column-header--done"}
+          onTaskMoved={handleTaskMoved}
         />
       </div>
 
