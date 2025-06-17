@@ -16,7 +16,7 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
   const [labels, setLabels] = useState([]);
   const [showAddLabelForm, setShowAddLabelForm] = useState(false);
 
-  // Fetch statuses
+  // Fetch statussen
   const {
     data: statusesData,
     isPending: isStatusesLoading,
@@ -61,19 +61,16 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
     setShowAddLabelForm(false);
   };
 
-  // Use mutation for creating tasks
+  // taken creeren mutatie
   const createTaskMutation = useMutation({
     mutationFn: createTask,
     onSuccess: (data) => {
-      // Invalidate and refetch queries related to tasks
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
 
-      // Notify parent component of success
       if (onTaskAdded) {
         onTaskAdded(data);
       }
 
-      // Close the modal
       onClose();
     },
   });

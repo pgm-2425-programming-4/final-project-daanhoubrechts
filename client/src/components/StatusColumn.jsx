@@ -23,7 +23,6 @@ export function StatusColumn({ statusName, data, className, onTaskMoved }) {
   const updateStatusMutation = useMutation({
     mutationFn: ({ taskId, statusId }) => updateTaskStatus(taskId, statusId),
     onSuccess: () => {
-      // Invalidate and refetch the tasks query
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       onTaskMoved();
     },
