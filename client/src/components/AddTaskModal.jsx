@@ -63,7 +63,7 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
 
   // Use mutation for creating tasks
   const createTaskMutation = useMutation({
-    mutationFn: (taskData) => createTask(taskData),
+    mutationFn: createTask,
     onSuccess: (data) => {
       // Invalidate and refetch queries related to tasks
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
@@ -82,15 +82,17 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
     e.preventDefault();
     if (!title.trim()) return;
 
-    const taskData = {
-      title,
-      description: description || null,
-      current_status: status,
-      project: projectId,
-      labels: labels,
+    const submitData = {
+      data: {
+        title: title,
+        description: description || undefined,
+        current_status: status || undefined,
+        project: projectId || undefined,
+        labels: labels.length > 0 ? labels : undefined,
+      },
     };
 
-    createTaskMutation.mutate(taskData);
+    createTaskMutation.mutate(submitData);
   };
 
   return (
