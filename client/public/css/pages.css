@@ -21,7 +21,7 @@
   font-size: var(--font-xl);
   font-weight: 600;
   color: var(--color-white);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-lg);
   position: relative;
   display: inline-block;
 }
