@@ -2,8 +2,12 @@ import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { fetchProjects } from "../queries/projects/fetchProjects";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { AddProjectModal } from "../components/AddProjectModal";
 
 const RootComponent = () => {
+  const [showAddProjectModal, setShowAddProjectModal] = useState(false);
+
   //projects ophalen
   const {
     data: projectsData,
@@ -50,9 +54,9 @@ const RootComponent = () => {
         </div>
         <div className="sidebar__section">
           <h2 className="sidebar__title">PROJECTS</h2>
-          {projects.map((project) => (
-            <div key={project.id} className="sidebar__project">
-              <div className="sidebar__item">
+          <div className="sidebar__project">
+            {projects.map((project) => (
+              <div key={project.id} className="sidebar__item">
                 <Link
                   to="/projects/$projectId"
                   params={{ projectId: project.id }}
@@ -61,8 +65,14 @@ const RootComponent = () => {
                   {project.name}
                 </Link>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <button
+            className="btn btn--small btn--outline add-project-btn"
+            onClick={() => setShowAddProjectModal(true)}
+          >
+            + New Project
+          </button>
         </div>
         <div className="sidebar__section">
           <h2 className="sidebar__title">INFO</h2>
@@ -78,6 +88,9 @@ const RootComponent = () => {
       </div>
       <Outlet />
       <TanStackRouterDevtools />
+      {showAddProjectModal && (
+        <AddProjectModal onClose={() => setShowAddProjectModal(false)} />
+      )}
     </>
   );
 };
