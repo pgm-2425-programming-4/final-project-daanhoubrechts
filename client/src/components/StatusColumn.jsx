@@ -74,12 +74,12 @@ export function StatusColumn({ statusName, data, className, onTaskMoved }) {
       <h2 className={`board__column-header ${className}`}>{statusName}</h2>
 
       {isStatusesLoading && (
-        <div className="column-loading">Statussen laden...</div>
+        <div className="column-loading">Loading statuses...</div>
       )}
 
       {isStatusesError && (
         <div className="column-error">
-          Fout bij het laden van statussen: {statusesError.message}
+          Error loading statuses: {statusesError.message}
         </div>
       )}
 

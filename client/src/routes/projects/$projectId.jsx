@@ -89,7 +89,7 @@ function RouteComponent() {
   if (isTasksLoading) {
     return (
       <div className="main-content">
-        <div className="loading-message">Taken aan het laden...</div>
+        <div className="loading-message">Loading tasks...</div>
       </div>
     );
   }
@@ -99,7 +99,7 @@ function RouteComponent() {
     return (
       <div className="main-content">
         <div className="error-message">
-          Fout bij het laden van taken: {tasksError.message}
+          Error loading tasks: {tasksError.message}
         </div>
       </div>
     );
@@ -129,11 +129,11 @@ function RouteComponent() {
           <div className="search-container">
             <input
               type="text"
-              placeholder="Zoek op taak naam..."
+              placeholder="Search by task name..."
               value={searchTerm}
               onChange={handleSearchChange}
               className="search-box"
-              aria-label="Zoek op taak naam"
+              aria-label="Search by task name"
             />
           </div>
 
