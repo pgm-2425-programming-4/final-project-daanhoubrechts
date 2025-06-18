@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   fetchStatuses,
   getStatusName,
@@ -47,19 +47,25 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
 
   const availableLabels = labelsData || [];
 
-  const handleLabelToggle = (labelId) => {
-    if (labels.includes(labelId)) {
-      setLabels(labels.filter((id) => id !== labelId));
-    } else {
-      setLabels([...labels, labelId]);
-    }
-  };
+  const handleLabelToggle = useCallback(
+    (labelId) => {
+      if (labels.includes(labelId)) {
+        setLabels(labels.filter((id) => id !== labelId));
+      } else {
+        setLabels([...labels, labelId]);
+      }
+    },
+    [labels]
+  );
 
-  const handleLabelAdded = (createdLabel) => {
-    queryClient.invalidateQueries({ queryKey: ["labels"] });
-    setLabels([...labels, createdLabel.id]);
-    setShowAddLabelForm(false);
-  };
+  const handleLabelAdded = useCallback(
+    (createdLabel) => {
+      queryClient.invalidateQueries({ queryKey: ["labels"] });
+      setLabels([...labels, createdLabel.id]);
+      setShowAddLabelForm(false);
+    },
+    [queryClient, labels]
+  );
 
   // taken creeren mutatie
   const createTaskMutation = useMutation({
@@ -104,19 +110,19 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
         <div className="modal-body">
           {(isStatusesLoading || isLabelsLoading) && (
             <div className="loading-message">
-              <p>Gegevens laden...</p>
+              <p>Loading data...</p>
             </div>
           )}
 
           {isStatusesError && (
             <div className="error-message">
-              <p>Fout bij het laden van statussen: {statusesError.message}</p>
+              <p>Error loading statuses: {statusesError.message}</p>
             </div>
           )}
 
           {isLabelsError && (
             <div className="error-message">
-              <p>Fout bij het laden van labels: {labelsError.message}</p>
+              <p>Error loading labels: {labelsError.message}</p>
             </div>
           )}
 

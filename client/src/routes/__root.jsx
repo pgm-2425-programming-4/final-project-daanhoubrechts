@@ -25,7 +25,7 @@ const RootComponent = () => {
   if (isPending) {
     return (
       <div className="loading-container">
-        <p>Projecten laden...</p>
+        <p>Loading projects...</p>
       </div>
     );
   }
@@ -34,7 +34,7 @@ const RootComponent = () => {
   if (isError) {
     return (
       <div className="error-container">
-        <p>Fout bij het laden van projecten: {error.message}</p>
+        <p>Error loading projects: {error.message}</p>
       </div>
     );
   }

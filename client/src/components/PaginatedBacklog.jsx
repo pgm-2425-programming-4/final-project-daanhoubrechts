@@ -42,13 +42,13 @@ export function PaginatedBacklog({ projectId }) {
 
       {isPending && (
         <div className="backlog__loading">
-          <span>Taken laden...</span>
+          <span>Loading tasks...</span>
         </div>
       )}
 
       {isError && (
         <div className="backlog__error">
-          <span>Er is een fout opgetreden: {error.message}</span>
+          <span>An error occurred: {error.message}</span>
         </div>
       )}
 
