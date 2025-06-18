@@ -28,8 +28,7 @@ function About() {
           <div className="about__section">
             <h2 className="page__subtitle">Technical details</h2>
             <p className="page__text">
-              This application is built with modern web development
-              technologies:
+              This application is built with these web development technologies:
             </p>
             <div className="about__tech-stack">
               <span className="about__tech-item">React</span>
