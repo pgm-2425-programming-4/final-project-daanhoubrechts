@@ -1,53 +1,56 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useMemo } from "react";
 import { fetchTasksByProjectId } from "../../queries/tasks/fetchTasksByProjectId";
 import { StatusColumn } from "../../components/StatusColumn";
 import { AddTaskModal } from "../../components/AddTaskModal";
 import { fetchLabels, getLabelName } from "../../queries/labels/fetchLabels";
-import { isEmpty } from "../../utils/isEmpty";
+import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/projects/$projectId")({
-  loader: async ({ params }) => {
-    const data = await fetchTasksByProjectId(params.projectId);
-    if (isEmpty(data)) {
-      console.error("No data found for Project:", params.projectId);
-      throw notFound();
-    }
-    return data;
+  loader: ({ params }) => {
+    return { projectId: params.projectId };
   },
 
   component: RouteComponent,
-  notFoundComponent: ({ data }) => {
-    if (data.data === "INVALID_ROUTE") {
-      return <div>Invalid route</div>;
-    }
-    return <div>No tasks found</div>;
-  },
+  notFoundComponent: () => <div>No tasks found</div>,
 });
 
 function RouteComponent() {
-  const data = Route.useLoaderData();
+  const { projectId } = Route.useLoaderData();
   const params = Route.useParams();
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
-  const [tasks, setTasks] = useState(data.data || []);
-  const [availableLabels, setAvailableLabels] = useState([]);
   const [selectedLabelId, setSelectedLabelId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredTasks, setFilteredTasks] = useState(data.data || []);
 
-  useEffect(() => {
-    const loadLabels = async () => {
-      const labels = await fetchLabels();
-      setAvailableLabels(labels);
-    };
+  // Fetch tasks for the project
+  const {
+    data: tasksData,
+    refetch: refetchTasks,
+    isPending: isTasksLoading,
+    isError: isTasksError,
+    error: tasksError,
+  } = useQuery({
+    queryKey: ["tasks", projectId],
+    queryFn: () => fetchTasksByProjectId(projectId),
+    enabled: !!projectId,
+  });
 
-    loadLabels();
-  }, []);
+  // Fetch labels
+  const { data: labelsData } = useQuery({
+    queryKey: ["labels"],
+    queryFn: fetchLabels,
+  });
 
-  useEffect(() => {
+  const availableLabels = labelsData || [];
+
+  // Use useMemo for both tasks and filtered tasks to avoid dependency issues
+  const tasks = useMemo(() => tasksData?.data || [], [tasksData]);
+
+  // Use useMemo to filter tasks based on label and search term
+  const filteredTasks = useMemo(() => {
     let filtered = tasks;
 
-    // filteren op geselecteerde label
+    // Filter by selected label
     if (selectedLabelId) {
       filtered = filtered.filter(
         (task) =>
@@ -56,24 +59,22 @@ function RouteComponent() {
       );
     }
 
-    // filteren op zoekterm
+    // Filter by search term
     if (searchTerm) {
       filtered = filtered.filter((task) =>
         task.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    setFilteredTasks(filtered);
-  }, [selectedLabelId, searchTerm, tasks]);
+    return filtered;
+  }, [tasks, selectedLabelId, searchTerm]);
 
-  const handleAddTask = (newTask) => {
-    setTasks([...tasks, newTask.data]);
-    window.location.reload();
+  const handleAddTask = () => {
+    refetchTasks();
   };
 
   const handleTaskMoved = async () => {
-    const updatedData = await fetchTasksByProjectId(params.projectId);
-    setTasks(updatedData.data || []);
+    refetchTasks();
   };
 
   const handleLabelChange = (e) => {
@@ -83,6 +84,26 @@ function RouteComponent() {
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
+
+  // Loading state
+  if (isTasksLoading) {
+    return (
+      <div className="main-content">
+        <div className="loading-message">Taken aan het laden...</div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (isTasksError) {
+    return (
+      <div className="main-content">
+        <div className="error-message">
+          Fout bij het laden van taken: {tasksError.message}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="main-content">
