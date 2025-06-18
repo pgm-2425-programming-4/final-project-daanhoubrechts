@@ -6,7 +6,7 @@ export function Backlog({ backlogItems }) {
       <table className="backlog__table">
         <thead>
           <tr className="backlog__table-header">
-            <th>Titel</th>
+            <th>Title</th>
             <th>Labels</th>
           </tr>
         </thead>
@@ -14,7 +14,7 @@ export function Backlog({ backlogItems }) {
           {backlogItems.length === 0 ? (
             <tr className="backlog__table-row">
               <td className="backlog__table-cell" colSpan="2">
-                Geen taken gevonden in de backlog.
+                No tasks found in the backlog.
               </td>
             </tr>
           ) : (

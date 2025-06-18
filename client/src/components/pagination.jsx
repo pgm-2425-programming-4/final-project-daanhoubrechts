@@ -86,7 +86,7 @@ export function Pagination({
           disabled={currentPage === 1}
           onClick={() => onPageChanged(currentPage - 1)}
         >
-          Vorige
+          Previous
         </button>
 
         <ul className="pagination__list">{pageLinks}</ul>
@@ -96,7 +96,7 @@ export function Pagination({
           disabled={currentPage === pageCount}
           onClick={() => onPageChanged(currentPage + 1)}
         >
-          Volgende
+          Next
         </button>
       </div>
     </nav>

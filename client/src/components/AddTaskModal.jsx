@@ -110,19 +110,19 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
         <div className="modal-body">
           {(isStatusesLoading || isLabelsLoading) && (
             <div className="loading-message">
-              <p>Gegevens laden...</p>
+              <p>Loading data...</p>
             </div>
           )}
 
           {isStatusesError && (
             <div className="error-message">
-              <p>Fout bij het laden van statussen: {statusesError.message}</p>
+              <p>Error loading statuses: {statusesError.message}</p>
             </div>
           )}
 
           {isLabelsError && (
             <div className="error-message">
-              <p>Fout bij het laden van labels: {labelsError.message}</p>
+              <p>Error loading labels: {labelsError.message}</p>
             </div>
           )}
 

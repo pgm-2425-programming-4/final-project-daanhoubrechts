@@ -22,7 +22,7 @@ function Backlog() {
   if (isProjectLoading) {
     return (
       <div className="main-content backlog__loading">
-        Projectgegevens laden...
+        Loading project data...
       </div>
     );
   }
@@ -31,14 +31,14 @@ function Backlog() {
     return (
       <div className="main-content">
         <div className="backlog__error">
-          Fout bij het laden van het project: {projectError.message}
+          Error loading the project: {projectError.message}
         </div>
         <Link
           to="/projects/$projectId"
           params={{ projectId }}
           className="backlog__back-link"
         >
-          Terug naar Project
+          Back to Project
         </Link>
       </div>
     );
@@ -52,7 +52,7 @@ function Backlog() {
           params={{ projectId }}
           className="backlog__back-link"
         >
-          Terug naar Project
+          Back to Project
         </Link>
         <PaginatedBacklog projectId={projectId} />
       </div>
