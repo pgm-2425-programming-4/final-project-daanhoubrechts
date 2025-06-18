@@ -27,7 +27,7 @@ TaskTrek is a comprehensive task management application designed to help you org
 
 - **Strapi**: Headless CMS providing a customizable API
 - **Node.js**: JavaScript runtime for the server environment
-- **SQLite/PostgreSQL**: Database management system
+- **PostgreSQL**: Database management system
 
 ### Deployment
 
