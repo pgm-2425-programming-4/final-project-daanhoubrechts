@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   fetchStatuses,
   getStatusName,
@@ -6,34 +6,46 @@ import {
 import { fetchLabels, getLabelName } from "../queries/labels/fetchLabels";
 import { createTask } from "../queries/tasks/createTask";
 import { AddLabelForm } from "./AddLabelForm";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
+  const queryClient = useQueryClient();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
   const [labels, setLabels] = useState([]);
-  const [availableStatuses, setAvailableStatuses] = useState([]);
-  const [availableLabels, setAvailableLabels] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [showAddLabelForm, setShowAddLabelForm] = useState(false);
 
-  // Fetch statuses and labels when component mounts
-  useEffect(() => {
-    const loadData = async () => {
-      const statusesData = await fetchStatuses();
-      setAvailableStatuses(statusesData);
+  // Fetch statussen
+  const {
+    data: statusesData,
+    isPending: isStatusesLoading,
+    isError: isStatusesError,
+    error: statusesError,
+  } = useQuery({
+    queryKey: ["statuses"],
+    queryFn: fetchStatuses,
+  });
 
-      // Set default status if available
-      if (statusesData && statusesData.length > 0) {
-        setStatus(statusesData[0].id);
-      }
+  const availableStatuses = statusesData || [];
 
-      const labelsData = await fetchLabels();
-      setAvailableLabels(labelsData);
-    };
+  // Set default status when statuses are loaded
+  if (availableStatuses.length > 0 && !status) {
+    setStatus(availableStatuses[0].id);
+  }
 
-    loadData();
-  }, []);
+  // Fetch labels
+  const {
+    data: labelsData,
+    isPending: isLabelsLoading,
+    isError: isLabelsError,
+    error: labelsError,
+  } = useQuery({
+    queryKey: ["labels"],
+    queryFn: fetchLabels,
+  });
+
+  const availableLabels = labelsData || [];
 
   const handleLabelToggle = (labelId) => {
     if (labels.includes(labelId)) {
@@ -44,41 +56,40 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
   };
 
   const handleLabelAdded = (createdLabel) => {
-    setAvailableLabels([...availableLabels, createdLabel]);
+    queryClient.invalidateQueries({ queryKey: ["labels"] });
     setLabels([...labels, createdLabel.id]);
     setShowAddLabelForm(false);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!title.trim()) return;
+  // taken creeren mutatie
+  const createTaskMutation = useMutation({
+    mutationFn: createTask,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
 
-    setIsLoading(true);
-
-    try {
-      const taskData = {
-        title,
-        description: description || null,
-        current_status: status,
-        project: projectId,
-        labels: labels,
-      };
-
-      const data = await createTask(taskData);
-
-      // Notify parent component of success
       if (onTaskAdded) {
         onTaskAdded(data);
       }
 
-      // Close the modal
       onClose();
-    } catch (error) {
-      console.error("Error creating task:", error);
-      alert("Failed to create task. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!title.trim()) return;
+
+    const submitData = {
+      data: {
+        title: title,
+        description: description || undefined,
+        current_status: status || undefined,
+        project: projectId || undefined,
+        labels: labels.length > 0 ? labels : undefined,
+      },
+    };
+
+    createTaskMutation.mutate(submitData);
   };
 
   return (
@@ -91,104 +102,131 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
           </button>
         </div>
         <div className="modal-body">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="task-title">Title *</label>
-              <input
-                id="task-title"
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Task title"
-                required
-                className="form-control"
-              />
+          {(isStatusesLoading || isLabelsLoading) && (
+            <div className="loading-message">
+              <p>Gegevens laden...</p>
             </div>
+          )}
 
-            <div className="form-group">
-              <label htmlFor="task-description">Description</label>
-              <textarea
-                id="task-description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Task description"
-                className="form-control"
-                rows="4"
-              />
+          {isStatusesError && (
+            <div className="error-message">
+              <p>Fout bij het laden van statussen: {statusesError.message}</p>
             </div>
+          )}
 
-            <div className="form-group">
-              <label htmlFor="task-status">Status</label>
-              <select
-                id="task-status"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="form-control"
-              >
-                {availableStatuses.map((statusOption) => (
-                  <option key={statusOption.id} value={statusOption.id}>
-                    {getStatusName(statusOption)}
-                  </option>
-                ))}
-              </select>
+          {isLabelsError && (
+            <div className="error-message">
+              <p>Fout bij het laden van labels: {labelsError.message}</p>
             </div>
+          )}
 
-            {availableLabels.length > 0 && (
-              <div className="form-group">
-                <label>Labels</label>
-                <div className="labels-selection">
-                  {availableLabels.map((label) => (
-                    <div
-                      key={label.id}
-                      className="label-checkbox"
-                      onClick={() => handleLabelToggle(label.id)}
-                    >
-                      <input
-                        type="checkbox"
-                        id={`label-${label.id}`}
-                        checked={labels.includes(label.id)}
-                        onChange={(e) => e.stopPropagation()}
-                      />
-                      <span className="label-text">{getLabelName(label)}</span>
-                    </div>
-                  ))}
+          {!isStatusesLoading &&
+            !isLabelsLoading &&
+            !isStatusesError &&
+            !isLabelsError && (
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="task-title">Title *</label>
+                  <input
+                    id="task-title"
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Task title"
+                    required
+                    className="form-control"
+                  />
                 </div>
 
-                {!showAddLabelForm ? (
+                <div className="form-group">
+                  <label htmlFor="task-description">Description</label>
+                  <textarea
+                    id="task-description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Task description"
+                    className="form-control"
+                    rows="4"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="task-status">Status</label>
+                  <select
+                    id="task-status"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    className="form-control"
+                  >
+                    {availableStatuses.map((statusOption) => (
+                      <option key={statusOption.id} value={statusOption.id}>
+                        {getStatusName(statusOption)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {availableLabels.length > 0 && (
+                  <div className="form-group">
+                    <label>Labels</label>
+                    <div className="labels-selection">
+                      {availableLabels.map((label) => (
+                        <div
+                          key={label.id}
+                          className="label-checkbox"
+                          onClick={() => handleLabelToggle(label.id)}
+                        >
+                          <input
+                            type="checkbox"
+                            id={`label-${label.id}`}
+                            checked={labels.includes(label.id)}
+                            onChange={(e) => e.stopPropagation()}
+                          />
+                          <span className="label-text">
+                            {getLabelName(label)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {!showAddLabelForm ? (
+                      <button
+                        type="button"
+                        className="btn btn--small btn--secondary"
+                        onClick={() => setShowAddLabelForm(true)}
+                      >
+                        + Add New Label
+                      </button>
+                    ) : (
+                      <AddLabelForm
+                        onLabelAdded={handleLabelAdded}
+                        onCancel={() => setShowAddLabelForm(false)}
+                      />
+                    )}
+                  </div>
+                )}
+
+                <div className="form-actions">
                   <button
                     type="button"
-                    className="btn btn--small btn--secondary"
-                    onClick={() => setShowAddLabelForm(true)}
+                    className="btn btn--secondary"
+                    onClick={onClose}
+                    disabled={createTaskMutation.isPending}
                   >
-                    + Add New Label
+                    Cancel
                   </button>
-                ) : (
-                  <AddLabelForm
-                    onLabelAdded={handleLabelAdded}
-                    onCancel={() => setShowAddLabelForm(false)}
-                  />
-                )}
-              </div>
+                  <button
+                    type="submit"
+                    className="btn btn--primary"
+                    disabled={createTaskMutation.isPending || !title.trim()}
+                  >
+                    {createTaskMutation.isPending
+                      ? "Creating..."
+                      : "Create Task"}
+                  </button>
+                </div>
+              </form>
             )}
-
-            <div className="form-actions">
-              <button
-                type="button"
-                className="btn btn--secondary"
-                onClick={onClose}
-                disabled={isLoading}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="btn btn--primary"
-                disabled={isLoading || !title.trim()}
-              >
-                {isLoading ? "Creating..." : "Create Task"}
-              </button>
-            </div>
-          </form>
         </div>
       </div>
     </div>

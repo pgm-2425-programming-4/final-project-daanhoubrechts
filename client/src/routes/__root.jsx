@@ -1,24 +1,39 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { fetchProjects } from "../queries/projects/fetchProjects";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 const RootComponent = () => {
-  const [projects, setProjects] = useState([]);
+  //projects ophalen
+  const {
+    data: projectsData,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["projects"],
+    queryFn: fetchProjects,
+  });
 
-  useEffect(() => {
-    const loadProjects = async () => {
-      try {
-        const result = await fetchProjects();
-        console.log("Projects data:", result);
-        setProjects(result.data || []);
-      } catch (error) {
-        console.error("Error loading projects:", error);
-      }
-    };
+  const projects = projectsData?.data || [];
 
-    loadProjects();
-  }, []);
+  // Loading state for projects
+  if (isPending) {
+    return (
+      <div className="loading-container">
+        <p>Projecten laden...</p>
+      </div>
+    );
+  }
+
+  // Error state for projects
+  if (isError) {
+    return (
+      <div className="error-container">
+        <p>Fout bij het laden van projecten: {error.message}</p>
+      </div>
+    );
+  }
 
   return (
     <>

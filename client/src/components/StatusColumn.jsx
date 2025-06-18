@@ -1,19 +1,32 @@
 import { Task, ItemTypes } from "./Task";
 import { useDrop } from "react-dnd";
-import { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchStatuses } from "../queries/statuses/fetchStatuses";
 import { updateTaskStatus } from "../queries/tasks/updateTaskStatus";
 
 export function StatusColumn({ statusName, data, className, onTaskMoved }) {
-  const [statuses, setStatuses] = useState([]);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const getStatuses = async () => {
-      const fetchedStatuses = await fetchStatuses();
-      setStatuses(fetchedStatuses);
-    };
-    getStatuses();
-  }, []);
+  //statussen ophalen
+  const {
+    data: statusesData,
+    isPending: isStatusesLoading,
+    isError: isStatusesError,
+    error: statusesError,
+  } = useQuery({
+    queryKey: ["statuses"],
+    queryFn: fetchStatuses,
+  });
+
+  const statuses = statusesData || [];
+
+  const updateStatusMutation = useMutation({
+    mutationFn: ({ taskId, statusId }) => updateTaskStatus(taskId, statusId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      onTaskMoved();
+    },
+  });
 
   const hasValidData = data && data.data && Array.isArray(data.data);
 
@@ -32,19 +45,18 @@ export function StatusColumn({ statusName, data, className, onTaskMoved }) {
           (status) => status.Name === statusName
         );
 
-        updateTaskStatus(item.documentId, targetStatus.documentId)
-          .then(() => {
-            onTaskMoved();
-          })
-          .catch((error) => {
-            console.error("Error updating task status:", error);
+        if (targetStatus) {
+          updateStatusMutation.mutate({
+            taskId: item.documentId,
+            statusId: targetStatus.documentId,
           });
+        }
       },
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),
     }),
-    [statuses, statusName, onTaskMoved]
+    [statuses, statusName, updateStatusMutation]
   );
 
   return (
@@ -53,9 +65,22 @@ export function StatusColumn({ statusName, data, className, onTaskMoved }) {
       className={`board__column ${isOver ? "board__column--drag-over" : ""}`}
     >
       <h2 className={`board__column-header ${className}`}>{statusName}</h2>
-      {filteredTasks.map((task) => {
-        return <Task key={task.id} task={task} />;
-      })}
+
+      {isStatusesLoading && (
+        <div className="column-loading">Statussen laden...</div>
+      )}
+
+      {isStatusesError && (
+        <div className="column-error">
+          Fout bij het laden van statussen: {statusesError.message}
+        </div>
+      )}
+
+      {!isStatusesLoading &&
+        !isStatusesError &&
+        filteredTasks.map((task) => {
+          return <Task key={task.id} task={task} />;
+        })}
     </div>
   );
 }
