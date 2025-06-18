@@ -5,6 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 50rem;
+  width: 100%;
 }
 
 .backlog__title {
@@ -63,6 +65,7 @@
   color: var(--color-text);
   font-size: var(--font-sm);
   text-align: center;
+  width: 50%;
 }
 
 .backlog__table-cell--title {
@@ -70,11 +73,11 @@
   text-align: left;
 }
 
-.backlog__table-cell--labels {
+.backlog__labels {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   gap: var(--space-xs);
+  margin-top: var(--space-sm);
+  flex-wrap: wrap;
 }
 
 /* Loading and Error states */
