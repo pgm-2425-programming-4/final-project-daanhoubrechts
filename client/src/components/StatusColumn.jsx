@@ -3,6 +3,7 @@ import { useDrop } from "react-dnd";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchStatuses } from "../queries/statuses/fetchStatuses";
 import { updateTaskStatus } from "../queries/tasks/updateTaskStatus";
+import { useMemo } from "react";
 
 export function StatusColumn({ statusName, data, className, onTaskMoved }) {
   const queryClient = useQueryClient();
@@ -30,11 +31,14 @@ export function StatusColumn({ statusName, data, className, onTaskMoved }) {
 
   const hasValidData = data && data.data && Array.isArray(data.data);
 
-  const filteredTasks = hasValidData
-    ? data.data.filter(
-        (task) => task.current_status && task.current_status.Name === statusName
-      )
-    : [];
+  // Optimalisatie: gebruik useMemo om te voorkomen dat filtering bij elke render opnieuw gebeurt
+  const filteredTasks = useMemo(() => (
+    hasValidData
+      ? data.data.filter(
+          (task) => task.current_status && task.current_status.Name === statusName
+        )
+      : []
+  ), [hasValidData, data, statusName]);
 
   // drop functionaliteit
   const [{ isOver }, drop] = useDrop(

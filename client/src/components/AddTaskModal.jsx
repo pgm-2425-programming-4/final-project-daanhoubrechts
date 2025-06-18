@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   fetchStatuses,
   getStatusName,
@@ -47,19 +47,25 @@ export function AddTaskModal({ projectId, onClose, onTaskAdded }) {
 
   const availableLabels = labelsData || [];
 
-  const handleLabelToggle = (labelId) => {
-    if (labels.includes(labelId)) {
-      setLabels(labels.filter((id) => id !== labelId));
-    } else {
-      setLabels([...labels, labelId]);
-    }
-  };
+  const handleLabelToggle = useCallback(
+    (labelId) => {
+      if (labels.includes(labelId)) {
+        setLabels(labels.filter((id) => id !== labelId));
+      } else {
+        setLabels([...labels, labelId]);
+      }
+    },
+    [labels]
+  );
 
-  const handleLabelAdded = (createdLabel) => {
-    queryClient.invalidateQueries({ queryKey: ["labels"] });
-    setLabels([...labels, createdLabel.id]);
-    setShowAddLabelForm(false);
-  };
+  const handleLabelAdded = useCallback(
+    (createdLabel) => {
+      queryClient.invalidateQueries({ queryKey: ["labels"] });
+      setLabels([...labels, createdLabel.id]);
+      setShowAddLabelForm(false);
+    },
+    [queryClient, labels]
+  );
 
   // taken creeren mutatie
   const createTaskMutation = useMutation({

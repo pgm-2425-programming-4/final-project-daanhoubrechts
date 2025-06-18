@@ -13,32 +13,20 @@ export function TaskModal({ task, onClose }) {
           </button>
         </div>
         <div className="modal-body">
-          {task.description && (
-            <div className="task-description">
-              <h3>Description</h3>
-              <p>{task.description}</p>
-            </div>
-          )}
+          <div className="task-description">
+            <h3>Description</h3>
+            <p>{task.description ? task.description : "-"}</p>
+          </div>
 
           <div className="task-details">
             <div className="task-detail">
               <h3>Status</h3>
-              <p>{task.current_status?.Name || "No status"}</p>
+              <p>{task.current_status.Name}</p>
             </div>
 
             <div className="task-detail">
               <h3>Project</h3>
-              <p>{task.project?.name || "No project"}</p>
-            </div>
-
-            <div className="task-detail">
-              <h3>Created</h3>
-              <p>{new Date(task.createdAt).toLocaleDateString()}</p>
-            </div>
-
-            <div className="task-detail">
-              <h3>Updated</h3>
-              <p>{new Date(task.updatedAt).toLocaleDateString()}</p>
+              <p>{task.project.name}</p>
             </div>
           </div>
 
