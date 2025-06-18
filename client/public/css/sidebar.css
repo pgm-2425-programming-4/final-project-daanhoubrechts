@@ -63,14 +63,13 @@
 }
 
 .sidebar__project {
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-lg);
 }
 
 .add-project-btn {
   width: 100%;
   font-size: var(--font-sm);
   text-align: center;
-  margin-bottom: var(--space-md);
 }
 
 .sidebar__sub-item {
