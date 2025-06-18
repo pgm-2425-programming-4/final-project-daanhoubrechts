@@ -32,13 +32,16 @@ export function StatusColumn({ statusName, data, className, onTaskMoved }) {
   const hasValidData = data && data.data && Array.isArray(data.data);
 
   // Optimalisatie: gebruik useMemo om te voorkomen dat filtering bij elke render opnieuw gebeurt
-  const filteredTasks = useMemo(() => (
-    hasValidData
-      ? data.data.filter(
-          (task) => task.current_status && task.current_status.Name === statusName
-        )
-      : []
-  ), [hasValidData, data, statusName]);
+  const filteredTasks = useMemo(
+    () =>
+      hasValidData
+        ? data.data.filter(
+            (task) =>
+              task.current_status && task.current_status.Name === statusName
+          )
+        : [],
+    [hasValidData, data, statusName]
+  );
 
   // drop functionaliteit
   const [{ isOver }, drop] = useDrop(
