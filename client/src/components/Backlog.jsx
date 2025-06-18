@@ -1,3 +1,5 @@
+import { Tag } from "./Tag";
+
 export function Backlog({ backlogItems }) {
   return (
     <div className="backlog__container">
@@ -22,14 +24,16 @@ export function Backlog({ backlogItems }) {
                   <td className="backlog__table-cell backlog__table-cell--title">
                     {backlogItem.title}
                   </td>
-                  <td className="backlog__table-cell backlog__table-cell--labels">
-                    {backlogItem.attributes?.labels?.data?.length > 0
-                      ? backlogItem.attributes.labels.data.map((label) => (
-                          <span className="tag" key={label.id}>
-                            {label.attributes.name}
-                          </span>
-                        ))
-                      : "-"}
+                  <td className="backlog__table-cell">
+                    {backlogItem.labels && backlogItem.labels.length > 0 ? (
+                      <div className="backlog__labels">
+                        {backlogItem.labels.map((label) => (
+                          <Tag key={label.id} label={label} />
+                        ))}
+                      </div>
+                    ) : (
+                      "-"
+                    )}
                   </td>
                 </tr>
               );
