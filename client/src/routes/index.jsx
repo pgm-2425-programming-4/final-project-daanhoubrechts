@@ -10,44 +10,42 @@ function Index() {
     <div className="main-content">
       <div className="page">
         <div className="home__hero">
-          <h1 className="home__hero-title">
-            Welkom bij mijn Kanban Applicatie
-          </h1>
+          <h1 className="home__hero-title">Welcome to TaskTrek</h1>
           <p className="home__hero-subtitle">
-            Een modern taakbeheersysteem voor efficiënte projectplanning en
-            -organisatie
+            A comprehensive task management system for projects where tasks go
+            on a "journey" from Backlog to Done
           </p>
         </div>
 
         <div className="page__content">
           <div className="home__content-section">
-            <h2 className="page__title">Aan de slag</h2>
+            <h2 className="page__title">Get Started</h2>
             <p className="page__text">
-              Deze Kanban-applicatie helpt je bij het organiseren van taken
-              binnen je projecten. Gebruik het board om je taken te visualiseren
-              en te verplaatsen tussen verschillende statussen.
+              TaskTrek helps you efficiently organize and track your projects.
+              Use the visual Kanban board to visualize your tasks and gain
+              insights into the progress of your projects.
             </p>
           </div>
 
           <div className="home__content-section">
-            <h3 className="page__subtitle">Wat kun je doen?</h3>
+            <h3 className="page__subtitle">What can you do?</h3>
             <ul className="page__feature-compact">
-              <li> De backlog van je project bekijken</li>
-              <li> Nieuwe taken toevoegen met labels en prioriteiten</li>
-              <li> Taken bekijken en beheren in een visueel board</li>
-              <li> Taken organiseren op basis van status</li>
+              <li>Create and manage multiple projects</li>
+              <li>Visualize tasks on an intuitive Kanban board</li>
+              <li>Move tasks between columns with drag-and-drop</li>
+              <li>Assign labels to tasks for better categorization</li>
             </ul>
           </div>
 
           <div className="home__actions">
             <div className="page__link-list">
               <Link to="/about" className="page__link">
-                Over deze app
+                About this app
               </Link>
             </div>
 
             <div className="page__copyright">
-              © {new Date().getFullYear()} Daan Houbrechts -
+              &copy; {new Date().getFullYear()} Daan Houbrechts -
               Arteveldehogeschool
             </div>
           </div>
