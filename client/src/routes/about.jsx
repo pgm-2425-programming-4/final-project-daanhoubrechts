@@ -10,33 +10,33 @@ function About() {
     <div className="main-content">
       <div className="page">
         <div className="page__content">
-          <h1 className="page__title">Over deze applicatie</h1>
+          <h1 className="page__title">About this application</h1>
 
           <div className="about__section">
             <p className="page__text">
-              Dit is een Kanban-applicatie ontwikkeld als eindopdracht voor het
-              vak PGM-4 van de opleiding Programmeren aan de
+              This is a comprehensive task management application developed as a
+              final project for the PGM-4 course of the Programming degree at
               Arteveldehogeschool.
             </p>
             <p className="page__text">
-              De applicatie is gebouwd met React en maakt gebruik van moderne
-              webontwikkelingstechnologieën om een efficiënte en
-              gebruiksvriendelijke taakbeheertool te creëren.
+              TaskTrek is designed to help you organize and track your projects
+              efficiently, with a visual representation of tasks on their
+              journey from Backlog to Done.
             </p>
           </div>
 
           <div className="about__section">
-            <h2 className="page__subtitle">Technische details</h2>
+            <h2 className="page__subtitle">Technical details</h2>
             <p className="page__text">
-              Deze applicatie is gebouwd met moderne
-              webontwikkelingstechnologieën:
+              This application is built with these web development technologies:
             </p>
             <div className="about__tech-stack">
               <span className="about__tech-item">React</span>
               <span className="about__tech-item">TanStack Router</span>
-              <span className="about__tech-item">React Query</span>
+              <span className="about__tech-item">TanStack Query</span>
               <span className="about__tech-item">Strapi CMS</span>
-              <span className="about__tech-item">Custom CSS </span>
+              <span className="about__tech-item">Vite</span>
+              <span className="about__tech-item">Custom CSS</span>
             </div>
           </div>
 
