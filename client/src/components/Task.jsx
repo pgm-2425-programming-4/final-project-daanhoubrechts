@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Tag } from "./Tag";
 import { TaskModal } from "./TaskModal";
 import { useDrag } from "react-dnd";
@@ -24,13 +24,13 @@ export function Task({ task }) {
     }),
   }));
 
-  const handleTaskClick = () => {
+  const handleTaskClick = useCallback(() => {
     setShowModal(true);
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setShowModal(false);
-  };
+  }, []);
 
   return (
     <>
